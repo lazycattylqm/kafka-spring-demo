@@ -1,6 +1,5 @@
 package com.lqm.demo.kafkaspringdemo.config;
 
-import com.lqm.demo.kafkaspringdemo.listener.MyAckListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
