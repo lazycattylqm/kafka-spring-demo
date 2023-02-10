@@ -30,22 +30,6 @@ public class ConsumerConfig {
         return new DefaultKafkaConsumerFactory<>(consumerConfigs());
     }
 
-//    @Bean
-    public ContainerProperties containerProperties(MyAckListener listener) {
-        ContainerProperties containerProperties = new ContainerProperties("topic");
-        containerProperties.setMessageListener(listener);
-        return containerProperties;
-    }
-
-//    @Bean
-    public KafkaMessageListenerContainer<String, String> kafkaMessageListenerContainer(
-            ConsumerFactory<String, String> consumerFactory, ContainerProperties containerProperties) {
-        KafkaMessageListenerContainer<String, String> listenerContainer =
-                new KafkaMessageListenerContainer<>(consumerFactory, containerProperties);
-        return listenerContainer;
-
-    }
-
     @Bean
     public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> kafkaListenerContainerFactory(
             ConsumerFactory<String, String> consumerFactory) {
