@@ -8,7 +8,6 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 import org.springframework.kafka.listener.ContainerProperties;
-import org.springframework.kafka.listener.KafkaMessageListenerContainer;
 
 import java.util.Map;
 
@@ -19,9 +18,14 @@ public class ConsumerConfig {
                 "bootstrap.servers", "localhost:9092",
                 "key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer",
                 "value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer",
-                "group.id", "group_id",
-                "enable.auto.commit", "false"
+                "group.id", "group_id"
         );
+        /*return new HashMap<String, Object>(){{
+            put("bootstrap.servers", "localhost:9092");
+            put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+            put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+            put("group.id", "group_id");
+        }};*/
     }
 
     @Bean
