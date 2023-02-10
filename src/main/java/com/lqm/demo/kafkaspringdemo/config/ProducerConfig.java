@@ -7,7 +7,6 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 
 import java.util.Map;
-import java.util.Objects;
 
 @Configuration
 public class ProducerConfig {
@@ -17,6 +16,13 @@ public class ProducerConfig {
                 "key.serializer", "org.apache.kafka.common.serialization.StringSerializer",
                 "value.serializer", "org.apache.kafka.common.serialization.StringSerializer"
         );
+        /*return new HashMap<String,Object>(){
+            {
+                put("bootstrap.servers", "localhost:9092");
+                put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+                put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+            }
+        };*/
     }
 
     @Bean
