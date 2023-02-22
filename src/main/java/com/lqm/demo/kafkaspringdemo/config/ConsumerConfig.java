@@ -1,5 +1,6 @@
 package com.lqm.demo.kafkaspringdemo.config;
 
+import com.lqm.demo.kafkaspringdemo.listener.AnotherListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
@@ -34,7 +35,8 @@ public class ConsumerConfig {
     }
 
     @Bean
-    public <T> KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, T>> kafkaListenerContainerFactory() {
+    public <T> KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, T>> kafkaListenerContainerFactory(
+            AnotherListener anotherListener) {
         ConcurrentKafkaListenerContainerFactory<String, T> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
@@ -42,6 +44,8 @@ public class ConsumerConfig {
         factory.getContainerProperties()
                 .setPollTimeout(3000);
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL);
+
+        factory.getContainerProperties().setMessageListener(anotherListener);
         return factory;
     }
 
