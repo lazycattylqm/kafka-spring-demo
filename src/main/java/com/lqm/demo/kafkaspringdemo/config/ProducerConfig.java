@@ -14,7 +14,7 @@ public class ProducerConfig {
         return Map.of(
                 "bootstrap.servers", "localhost:9092",
                 "key.serializer", "org.apache.kafka.common.serialization.StringSerializer",
-                "value.serializer", "org.apache.kafka.common.serialization.StringSerializer"
+                "value.serializer", "org.springframework.kafka.support.serializer.JsonSerializer"
         );
         /*return new HashMap<String,Object>(){
             {
@@ -25,13 +25,12 @@ public class ProducerConfig {
         };*/
     }
 
-    @Bean
-    public ProducerFactory<String, String> producerFactory() {
+    private  <T> ProducerFactory<String, T> producerFactory() {
         return new DefaultKafkaProducerFactory<>(producerConfigs());
     }
 
     @Bean
-    public KafkaTemplate<String, String> kafkaTemplate(ProducerFactory<String, String> producerFactory) {
-        return new KafkaTemplate<>(producerFactory);
+    public <T> KafkaTemplate<String, T> kafkaTemplate() {
+        return new KafkaTemplate<>(producerFactory());
     }
 }

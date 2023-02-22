@@ -17,28 +17,27 @@ public class ConsumerConfig {
         return Map.of(
                 "bootstrap.servers", "localhost:9092",
                 "key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer",
-                "value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer",
-                "group.id", "group_id"
+                "value.deserializer", "org.springframework.kafka.support.serializer.JsonDeserializer",
+                "group.id", "group_id",
+                "spring.json.trusted.packages", "*"
         );
         /*return new HashMap<String, Object>(){{
             put("bootstrap.servers", "localhost:9092");
             put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-            put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+            put("value.deserializer", "org.apache.kafka.common.serialization.JsonDeserializer");
             put("group.id", "group_id");
         }};*/
     }
 
-    @Bean
-    public ConsumerFactory<String, String> consumerFactory() {
+    private <T> ConsumerFactory<String, T> consumerFactory() {
         return new DefaultKafkaConsumerFactory<>(consumerConfigs());
     }
 
     @Bean
-    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> kafkaListenerContainerFactory(
-            ConsumerFactory<String, String> consumerFactory) {
-        ConcurrentKafkaListenerContainerFactory<String, String> factory =
+    public <T> KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, T>> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, T> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory);
+        factory.setConsumerFactory(consumerFactory());
         factory.setConcurrency(3);
         factory.getContainerProperties()
                 .setPollTimeout(3000);
