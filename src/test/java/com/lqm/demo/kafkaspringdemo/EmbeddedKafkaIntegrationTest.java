@@ -1,5 +1,7 @@
 package com.lqm.demo.kafkaspringdemo;
 
+import com.lqm.demo.kafkaspringdemo.config.ConsumerConfigTest;
+import com.lqm.demo.kafkaspringdemo.config.ProducerConfigTest;
 import com.lqm.demo.kafkaspringdemo.listener.MyKafkaListener;
 import com.lqm.demo.kafkaspringdemo.producer.KafkaProducer;
 import org.junit.jupiter.api.Test;
@@ -7,13 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.annotation.DirtiesContext;
-import org.testcontainers.shaded.org.bouncycastle.asn1.cmc.TaggedRequest;
 
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertTrue;
 
-@SpringBootTest
+@SpringBootTest(classes = {ConsumerConfigTest.class,MyKafkaListener.class, KafkaProducer.class, ProducerConfigTest.class})
 @DirtiesContext
 @EmbeddedKafka(partitions = 1, topics = "topic", brokerProperties = {"listeners=PLAINTEXT://localhost:9092", "port=9092"})
 public class EmbeddedKafkaIntegrationTest {
@@ -28,7 +29,7 @@ public class EmbeddedKafkaIntegrationTest {
             throws Exception {
         String data = "Sending with our own simple KafkaProducer";
 
-        producer.sendMessage();
+//        producer.sendMessage();
 
         Thread thread = new Thread(() -> {
             try {

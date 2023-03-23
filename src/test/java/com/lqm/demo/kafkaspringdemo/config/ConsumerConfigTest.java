@@ -14,8 +14,8 @@ import org.springframework.kafka.listener.ContainerProperties;
 import java.util.Map;
 
 @Configuration
-@Profile({"!test"})
-public class ConsumerConfig {
+@Profile({"test"})
+public class ConsumerConfigTest {
     private Map<String, Object> consumerConfigs() {
         return Map.of(
                 "bootstrap.servers", "localhost:9092",
@@ -38,8 +38,7 @@ public class ConsumerConfig {
     }
 
     @Bean
-    public <T> KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, T>> kafkaListenerContainerFactory(
-            AnotherListener anotherListener) {
+    public <T> KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, T>> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, T> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());

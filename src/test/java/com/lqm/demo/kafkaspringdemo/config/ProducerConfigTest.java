@@ -10,8 +10,8 @@ import org.springframework.kafka.core.ProducerFactory;
 import java.util.Map;
 
 @Configuration
-@Profile({"!test"})
-public class ProducerConfig {
+@Profile({"test"})
+public class ProducerConfigTest {
     private Map<String, Object> producerConfigs() {
         return Map.of(
                 "bootstrap.servers", "localhost:9092",
