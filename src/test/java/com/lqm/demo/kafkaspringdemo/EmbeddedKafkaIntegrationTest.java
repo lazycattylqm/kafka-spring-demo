@@ -4,9 +4,12 @@ import com.lqm.demo.kafkaspringdemo.config.ConsumerConfigTest;
 import com.lqm.demo.kafkaspringdemo.config.ProducerConfigTest;
 import com.lqm.demo.kafkaspringdemo.listener.MyKafkaListener;
 import com.lqm.demo.kafkaspringdemo.producer.KafkaProducer;
+import org.junit.AfterClass;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.kafka.test.EmbeddedKafkaBroker;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.annotation.DirtiesContext;
 
@@ -23,6 +26,7 @@ public class EmbeddedKafkaIntegrationTest {
 
     @Autowired
     private KafkaProducer producer;
+
 
     @Test
     public void givenKafkaDockerContainer_whenSendingWithSimpleProducer_thenMessageReceived()
@@ -44,5 +48,9 @@ public class EmbeddedKafkaIntegrationTest {
 
 //        assertTrue(messageConsumed);
 
+    }
+    @AfterAll
+    public static void afterClass(@Autowired EmbeddedKafkaBroker embeddedKafkaBroker) {
+        embeddedKafkaBroker.destroy();
     }
 }
