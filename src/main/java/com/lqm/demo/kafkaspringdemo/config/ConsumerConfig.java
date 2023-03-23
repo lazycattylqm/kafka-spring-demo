@@ -20,7 +20,8 @@ public class ConsumerConfig {
                 "key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer",
                 "value.deserializer", "org.springframework.kafka.support.serializer.JsonDeserializer",
                 "group.id", "group_id",
-                "spring.json.trusted.packages", "*"
+                "spring.json.trusted.packages", "*",
+                "auto.offset.reset", "earliest"
         );
         /*return new HashMap<String, Object>(){{
             put("bootstrap.servers", "localhost:9092");
@@ -45,7 +46,7 @@ public class ConsumerConfig {
                 .setPollTimeout(3000);
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL);
 
-        factory.getContainerProperties().setMessageListener(anotherListener);
+//        factory.getContainerProperties().setMessageListener(anotherListener);
         return factory;
     }
 
