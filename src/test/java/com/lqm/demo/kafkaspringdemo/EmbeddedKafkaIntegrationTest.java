@@ -6,6 +6,7 @@ import com.lqm.demo.kafkaspringdemo.listener.MyKafkaListener;
 import com.lqm.demo.kafkaspringdemo.producer.KafkaProducer;
 import org.junit.AfterClass;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,7 +34,7 @@ public class EmbeddedKafkaIntegrationTest {
             throws Exception {
         String data = "Sending with our own simple KafkaProducer";
 
-//        producer.sendMessage();
+        producer.sendMessage();
 
         Thread thread = new Thread(() -> {
             try {
@@ -49,8 +50,8 @@ public class EmbeddedKafkaIntegrationTest {
 //        assertTrue(messageConsumed);
 
     }
-    @AfterAll
-    public static void afterClass(@Autowired EmbeddedKafkaBroker embeddedKafkaBroker) {
+    @AfterEach
+    public void afterClass(@Autowired EmbeddedKafkaBroker embeddedKafkaBroker) {
         embeddedKafkaBroker.destroy();
     }
 }
